@@ -3,21 +3,63 @@
 //
 #include "Matrix.h"
 #include <iostream>
+
+#include <iostream>
+#include "Matrix.h"
+
+// Helper function to display a matrix
+void printMatrix(const Matrix& matrix) {
+    for (std::size_t i = 0; i < matrix.rows(); ++i) {
+        for (std::size_t j = 0; j < matrix.cols(); ++j) {
+            std::cout << matrix.at(i, j) << "\t";
+        }
+        std::cout << '\n';
+    }
+}
+
 int main() {
     Matrix A(2, 2);
+    Matrix B(2, 2);
 
-    A.at(0, 0) = 10;
-    A.at(0, 1) = 20;
-    A.at(1, 0) = 30;
-    A.at(1, 1) = 40;
+    // Initialize Matrix A
+    A.at(0, 0) = 1;
+    A.at(0, 1) = 2;
+    A.at(1, 0) = 3;
+    A.at(1, 1) = 4;
 
-    const Matrix& B = A;
+    // Initialize Matrix B
+    B.at(0, 0) = 5;
+    B.at(0, 1) = 6;
+    B.at(1, 0) = 7;
+    B.at(1, 1) = 8;
 
-    std::cout << A.at(0, 1) << "\n"; // 20
-    std::cout << B.at(1, 0) << "\n"; // 30
-    Matrix C =B;
+    // Display original matrices
+    std::cout << "Matrix A:\n";
+    printMatrix(A);
 
-    std::cout<< C.at(0,1) <<"\n";
+    std::cout << "\nMatrix B:\n";
+    printMatrix(B);
 
-    // B.at(0, 0) = 100; // Compilation error
+    // Addition
+    Matrix C = A;
+    C += B;
+
+    std::cout << "\nC = A + B:\n";
+    printMatrix(C);
+
+    // Subtraction
+    Matrix D = A;
+    D -= B;
+
+    std::cout << "\nD = A - B:\n";
+    printMatrix(D);
+
+    // Multiplication
+    Matrix E = A;
+    E *= B;
+
+    std::cout << "\nE = A * B:\n";
+    printMatrix(E);
+
+    return 0;
 }

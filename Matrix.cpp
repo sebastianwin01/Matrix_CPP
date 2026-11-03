@@ -63,7 +63,16 @@ Matrix&Matrix::operator=(Matrix&& other) noexcept
     }
     return *this;
 }
+// Return the number of rows
+std::size_t Matrix::rows() const {
+    return rows_;
+}
 
+// Return the number of columns
+std::size_t Matrix::cols() const {
+    return cols_;
+}
+//vector location
 double& Matrix::at(std::size_t row, std::size_t col) {
     if (row>= rows_ || col >= cols_) {
         throw std::out_of_range("Matrix_CPP index out of bounds");
@@ -78,23 +87,64 @@ const double& Matrix::at(std::size_t row, std::size_t col) const {
     }
     return data_[row * cols_ + col];
 }
-Matrix Matrix::operator+(const Matrix& other) const{
-    // check matrix dimentions
-    if (other.rows_ != rows_ || other.cols_ != cols_) {
-        throw std::out_of_range("Matrices have to be the same size");
+
+//compound operators overload implementations
+
+Matrix& Matrix::operator+=(const Matrix& other) {
+    if (rows_ != other.rows_ || cols_ != other.cols_) {
+        throw std::invalid_argument("Matrices dimentions must match");
     }
-    Matrix result(rows_,cols_);
-    for (size_t i =0; i<rows_;i++) {
+    for (size_t i = 0 ;i < rows_; i++) {
         for (size_t j = 0; j < cols_; j++) {
-            result.at(i, j) = at(i, j) + other.at(i, j);
+            at(i,j) += other.at(i,j);
         }
     }
-    return result;
+    return *this;
 }
 
+Matrix& Matrix:: operator-=(const Matrix& other) {
+    if (rows_ != other.rows_ || cols_ != other.rows_) {
+        throw std::invalid_argument("Matrices must match");
+    }
+    for ( size_t i = 0 ; i< rows_; i++) {
+        for ( size_t j =0; j < cols_ ; j++) {
+            at(i,j) -= other.at(i,j);
+        }
+    }
+    return *this;
+}
 
+Matrix& Matrix::operator*=(const Matrix& other) {
 
+    // Check multiplication compatibility
+    if (cols_ != other.rows_) {
+        throw std::invalid_argument(
+            "Incompatible dimensions for matrix multiplication"
+        );
+    }
 
+    // Create result matrix with the correct dimensions
+    Matrix result(rows_, other.cols_);
+
+    // Perform matrix multiplication
+    for (std::size_t i = 0; i < rows_; ++i) {
+        for (std::size_t j = 0; j < other.cols_; ++j) {
+
+            double sum = 0.0;
+
+            for (std::size_t k = 0; k < cols_; ++k) {
+                sum += at(i, k) * other.at(k, j);
+            }
+
+            result.at(i, j) = sum;
+        }
+    }
+
+    // Replace this matrix with the computed result
+    *this = std::move(result);
+
+    return *this;
+}
 
 
 

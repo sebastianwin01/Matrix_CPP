@@ -33,11 +33,10 @@ public:
     double& at(std::size_t row, std::size_t col);
     const double& at (std::size_t row, std::size_t col)const;
 
-    //operator overloding for matrix operations
-    Matrix operator+(const Matrix& other) const;
-    Matrix operator-(const Matrix& other) const;
-    Matrix operator*(const Matrix& other) const;
-    Matrix operator/(const Matrix& other) const;
+    // Compound assignment operators (MEMBER FUNCTIONS)
+    Matrix& operator+=(const Matrix& other);
+    Matrix& operator-=(const Matrix& other);
+    Matrix& operator*=(const Matrix& other);
 
     //boolean operators
     bool operator==(const Matrix& other) const;
@@ -50,7 +49,17 @@ public:
     // Matrix_CPP transpose
     Matrix transpose() const;
 
+    // Getters
+    std::size_t rows() const;
+    std::size_t cols() const;
+
 };
+// Arithmetic operators (NON-MEMBER FUNCTIONS)
+Matrix operator+(Matrix lhs, const Matrix& rhs);
+Matrix operator-(Matrix lhs, const Matrix& rhs);
+Matrix operator*(Matrix lhs, const Matrix& rhs);
+
+//display operator as non-member funtion
 std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
 
 

@@ -103,7 +103,7 @@ Matrix& Matrix::operator+=(const Matrix& other) {
 }
 
 Matrix& Matrix:: operator-=(const Matrix& other) {
-    if (rows_ != other.rows_ || cols_ != other.rows_) {
+    if (rows_ != other.rows_ || cols_ != other.cols_) {
         throw std::invalid_argument("Matrices must match");
     }
     for ( size_t i = 0 ; i< rows_; i++) {

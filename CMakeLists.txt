@@ -9,8 +9,6 @@ add_executable(Matrix_CPP
         main.cpp
         Matrix.cpp
         Matrix.h
-        ../lecture13.cpp
-        ../practicetest1213.cpp
 )
 
 target_compile_options(Matrix_CPP PRIVATE

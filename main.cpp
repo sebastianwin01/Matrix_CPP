@@ -60,6 +60,16 @@ int main() {
 
     std::cout << "\nE = A * B:\n";
     printMatrix(E);
+    std::cout<<std::endl;
 
+    Matrix z(2, 3);
+    Matrix i(2, 3);
+
+    z.at(0, 0) = 10;
+    i.at(0, 0) = 4;
+
+    z -= i;
+
+    std::cout << z.at(0, 0) << '\n';
     return 0;
 }
